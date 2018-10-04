@@ -4,4 +4,13 @@
     list-style: none;
     display: flex;
     align-items: center;
+    height: 100%;
+}
+
+@media (max-width: 500px) {
+    .NavigationItems {
+        display: flex;
+        flex-flow: column;
+
+    }
 }
