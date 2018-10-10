@@ -21,15 +21,16 @@ class BurgerBuilder extends Component {
         super(props);
         this.state = {
             ingredients: {
-                salad: null,
-                bacon: null,
-                cheese: null,
-                meat: null,
+                salad: 0,
+                bacon: 0,
+                cheese: 0,
+                meat: 0,
             },
             totalPrice: 4,
             purchasable: false,
             purchasing: false,
-            loading: false
+            loading: false,
+            error: false
         };
     };
 
@@ -39,6 +40,9 @@ class BurgerBuilder extends Component {
                 this.setState({
                     ingredients: res.data,
                 });
+            })
+            .catch(error => {
+                this.setState({error:true});
             });
     }
 
@@ -99,34 +103,34 @@ class BurgerBuilder extends Component {
     purchaseCancelHandler = () => this.setState({purchasing: false});
     
     purchaseContinueHandler = () => {
-        this.setState({loading: true});
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            customer: {
-                name: 'Willy Kewl',
-                adress: {
-                    street: 'Super kewl street 1',
-                    zipCode: '34534',
-                    country: 'greeenland'
-                },
-                email: 'kewl@awsome.com'
-            },
-            deleveryMethod: 'fastest'
-        }
-        axios.post('/orders.json', order)
-            .then(response => {
-                this.setState({
-                    loading: false,
-                    purchasing: false
-                 });
-            })
-            .catch(error => {
-                this.setState({
-                    loading: false,
-                    purchasing: false
-                });
-            });
+        // this.setState({loading: true});
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     customer: {
+        //         name: 'Willy Kewl',
+        //         adress: {
+        //             street: 'Super kewl street 1',
+        //             zipCode: '34534',
+        //             country: 'greeenland'
+        //         },
+        //         email: 'kewl@awsome.com'
+        //     },
+        //     deleveryMethod: 'fastest'
+        // }
+        // axios.post('/orders.json', order)
+        //     .then(response => {
+        //         this.setState({
+        //             loading: false,
+        //             purchasing: false
+        //          });
+        //     })
+        //     .catch(error => {
+        //         this.setState({
+        //             loading: false,
+        //             purchasing: false
+        //         });
+        //     });
     }
 
 
@@ -140,7 +144,8 @@ class BurgerBuilder extends Component {
         }
         
         let orderSummary = null;  
-        let burger = <Spinner /> ;
+        let burger = this.state.error ? <p>Ingredients can't be loaded</p>:
+                                        <Spinner /> ;
         if (this.state.ingredients) {
             burger = ( 
                 <React.Fragment>

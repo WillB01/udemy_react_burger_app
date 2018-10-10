@@ -108,5 +108,6 @@
 .Bacon {
     width: 80%;
     height: 3%;
+    margin: 2% auto;
     background: linear-gradient(#bf3813, #c45e38);
 }
