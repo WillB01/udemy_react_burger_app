@@ -44,7 +44,7 @@ class ContactData extends Component {
                     validation: {
                         required: true
                     },
-                    valid: fals
+                    valid: false
                 },
                 country: {
                     elementType: 'input',
