@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import {updateObject} from '../../store/utility';
 
 
 const initialState = {
@@ -15,40 +16,50 @@ const INGREDIENT_PRICES = {
   
 };
 
+const addIngredient = (state, action) => {
+    const updatedIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName] + 1};
+    const updatedIngredients = updateObject(state.ingredients,updatedIngredient);
+    const updatedState = {
+        ingredients: updatedIngredients,
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+    };
+    return updateObject(state,updatedState);
+};
+
+const removeIngredient = (state, action) => {
+    const updatedIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName] - 1};
+    const updatedIngredients = updateObject(state.ingredients,updatedIngredient);
+    const updatedState = {
+        ingredients: updatedIngredients,
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+    };
+    return updateObject(state,updatedState);
+};
+
+const setIngredients = (state, action) => {
+    return updateObject(state, {
+        ingredients: action.ingredients,
+        totalPrice: 4,
+        error: false
+    });
+};
+
+const fetchIngredientsFailed = (state, action) => {
+    return updateObject(state, {error: true})
+};
+
 const reducer = (state = initialState, action) => {
     if (action.type === actionTypes.ADD_INGREDIENT) {
-        return {
-            ...state,
-            ingredients: {
-                ...state.ingredients,
-                [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-            },
-            totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
-        }
+        return addIngredient(state,action);
     }
     if (action.type === actionTypes.REMOVE_INGREDIENT) {
-        return {
-            ...state,
-            ingredients: {
-                ...state.ingredients,
-                [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-            },
-            totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
-        }
+       return removeIngredient(state, action);
     }
     if (action.type === actionTypes.SET_INGREDIENTS) {
-        return {
-            ...state,
-            ingredients: action.ingredients,
-            totalPrice: 4,
-            error: false
-        }
+        return setIngredients(state, action);
     }
     if (action.type === actionTypes.FETCH_INGREDIENTS_FAILED) {
-        return {
-            ...state,
-            error: true 
-        }
+        return fetchIngredientsFailed(state, action);
     }
     return state;
 }
