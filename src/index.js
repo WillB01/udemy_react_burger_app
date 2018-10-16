@@ -6,6 +6,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import burgerBuilder from './store/reducers/burgerBuilder';
+import order from './store/reducers/order';
 
 import {BrowserRouter} from 'react-router-dom';
 import {combineReducers, createStore, applyMiddleware, compose} from 'redux';
@@ -16,6 +17,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     brg: burgerBuilder,
+    order: order
 });
 
 const store = createStore(rootReducer,composeEnhancers(
