@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import classes from './Auth.css';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 
 class Auth extends Component {
@@ -38,7 +40,7 @@ class Auth extends Component {
             }
     };
 
-        checkValidity(value, rules) {
+    checkValidity(value, rules) {
             let isValid = true;
 
             if (rules.required) {
@@ -54,9 +56,9 @@ class Auth extends Component {
             }
 
             return isValid;
-        }
+    }
 
-        inputChangedHandler = (event, controlName) => {
+    inputChangedHandler = (event, controlName) => {
             const updatedOrderForm = { 
                 ...this.state.controls,
                 [controlName]: {
@@ -67,29 +69,13 @@ class Auth extends Component {
                 }
             };
             this.setState({controls: updatedOrderForm});
-            // const updatedFormElement = {
-            //     ...updatedOrderForm[controlName]
-            // };
+    };
 
-            // updatedFormElement.value = event.target.value;
-            // updatedFormElement.valid =
-            //     this.checkValidity(updatedFormElement.value,
-            //         updatedFormElement.validation);
-            // updatedFormElement.touched = true;
-            // updatedOrderForm[controlName] = updatedFormElement;
-
-            // let formIsValid = true;
-            // for (let inputIdentifier in updatedOrderForm) {
-            //     formIsValid = updatedOrderForm[inputIdentifier].valid &&
-            //         formIsValid;
-            // }
-
-            // this.setState({
-            //     controls: updatedOrderForm,
-            //     valid: formIsValid
-            // });
-
-        }
+    submitHandler = (event) => {
+        event.preventDefault();
+        this.props.onAuth(this.state.controls.email.value,
+                            this.state.controls.password.value);
+    };
 
     render() {
         const orderFormArray = [];
@@ -111,7 +97,7 @@ class Auth extends Component {
         
         return(
             <div className={classes.Auth}>
-                <form>
+                <form onSubmit={this.submitHandler}>
                    {form} 
                    <Button btnType="Success">SUBMIT</Button>
                 </form>
@@ -120,4 +106,10 @@ class Auth extends Component {
     };
 };
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+    return {
+        onAuth: (email, password) => dispatch(actions.auth(email, password))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Auth);
