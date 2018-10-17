@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as k from './apiKeys'
+import * as k from './k'
 
 const instance = axios.create({
     baseURL: k.bUrl 

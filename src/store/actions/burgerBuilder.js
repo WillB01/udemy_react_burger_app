@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-orders';
-import * as url from '../../apiKeys';
+import * as url from '../../k';
 
 export const addIngredients = (ingName) => {
     return {
