@@ -1,7 +1,8 @@
 import axios from 'axios';
+import * as k from './apiKeys'
 
 const instance = axios.create({
-    baseURL: 'https://react-my-burger-54a57.firebaseio.com/' 
+    baseURL: k.bUrl 
 });
 
 export default instance;
