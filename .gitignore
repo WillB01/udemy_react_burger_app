@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 k.js
+package.json
 
 # testing
 /coverage
