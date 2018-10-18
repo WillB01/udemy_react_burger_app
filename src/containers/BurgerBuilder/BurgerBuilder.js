@@ -19,7 +19,6 @@ class BurgerBuilder extends Component {
     };
 
     componentDidMount() {
-        console.log(this.props);
         this.props.onInitIngredients();
     }
 
@@ -63,7 +62,6 @@ class BurgerBuilder extends Component {
         }
         
         let orderSummary = null;  
-        console.log(this.props.error);
         let burger = this.props.error ? <p>Ingredients can't be loaded</p>:
                                         <Spinner /> ;
         if (this.props.ings) {

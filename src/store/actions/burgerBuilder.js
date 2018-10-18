@@ -33,7 +33,6 @@ export const initIngredients = () => {
     return dispatch => {
         axios.get(url.initIngredientsUrl)
         .then(res => {
-            console.log(res.data);
             dispatch(setIngredients(res.data));
         })
         .catch(error => {

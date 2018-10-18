@@ -3,13 +3,9 @@ import React, {Component} from 'react';
 import Button from '../UI/Button/Button';
 
 class OrderSummary extends Component {
-    componentWillUpdate() {
-        console.log('[orderSummary] Will update');
-    }
     render() {
         const ingredientsSummary = Object.keys(this.props.ingredients)
         .map((ingKey) => {
-            console.log(ingKey);
             return( 
                 <li key={ingKey}>
                     <span style={{textTransform: 'capitalize'}}>
